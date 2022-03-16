@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <div class="row justify-content-md-center">
+            <div th:each="dto, state: ${result.dtoList}" th:if="${state.index < 3}" class="card col-md-3 m-1" style="">
+                <img th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnail150URL()}|" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">[[${dto.pdName}]]</h5>
+                    <p class="card-text"><i class="fa fa-users"></i> 입찰인원: [[${dto.bidCount}]]명</p>
+                    <p class="card-text"><i class="fa fa-clock"></i> [[${#temporals.format(dto.endDate, 'yyyy/MM/dd HH')}]]시 마감</p>
+                    <a th:href="@{/product/read(pdNum=${dto.pdNum})}" class="btn btn-primary">상세보기</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div th:each="dto, state: ${result.dtoList}" th:if="${state.index > 2}" class="card col-md-3 m-1" style="">
+                <img th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnail150URL()}|" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">[[${dto.pdName}]]</h5>
+                    <p class="card-text"><i class="fa fa-users"></i> 입찰인원: [[${dto.bidCount}]]명</p>
+                    <p class="card-text"><i class="fa fa-clock"></i> [[${#temporals.format(dto.endDate, 'yyyy/MM/dd HH')}]]시 마감</p>
+                    <a th:href="@{/product/read(pdNum=${dto.pdNum})}" class="btn btn-primary">상세보기</a>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+</html>

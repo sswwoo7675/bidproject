@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="setContent(content)">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/css/my.css}" rel="stylesheet">
+
+    <script th:src="@{/js/jq/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/main">Bid GO</a>
+        <a href="/product/list" class="nav-link text-light">물품 현황</a>
+        <a href="/tradeinfo/reglist" class="nav-link text-light">등록/입찰내역</a>
+        <a href="" class="nav-link text-light">포인트충전</a>
+
+        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul sec:authorize="isAnonymous()" class="nav navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> 로그인</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/member/register"><i class="fas fa-user-plus"></i> 회원가입</a>
+                </li>
+            </ul>
+            <ul sec:authorize="isAuthenticated()" class="nav navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href=""><i class="fas fa-cog"></i> 계정설정</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link profile-link" href="/tradeinfo/reglist"><i class="fas fa-user-alt"></i> <span sec:authentication="principal.name"></span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> 로그아웃</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-3">
+    <th:block th:replace="${content}"></th:block>
+</div>
+
+<footer class="footer">
+    <div class="container mt-3">
+        <span class="text-muted">&copy; 2021 Daegu Catholic University 51Byte</span>
+    </div>
+</footer>
+</body>
+</th:block>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+</head>
+<body class="text-center">
+
+<form class="form-signin" method="post" action="/login">
+    <img class="mb-4" th:src="@{/css/login.svg}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Bid GO Sign in</h1>
+    <label for="username" class="sr-only">Email address</label>
+    <input type="email" id="username" name="username" class="form-control" placeholder="이메일을 입력하세요..." required
+           autofocus>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="패스워드를 입력하세요..." required>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2021 Daegu Catholic University 51Byte</p>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script th:src="@{js/bootstrap.bundle.min.js}"></script>
+
+<script th:inline="javascript">
+    var failed = [[${failed}]];
+
+    if(failed){
+        alert("로그인에 실패했습니다. 다시 로그인해 주세요.");
+    }
+</script>
+</body>
+
+</html>

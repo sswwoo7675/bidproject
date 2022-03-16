@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <style>
+            table {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            #pagination {
+                margin: 0 auto;
+            }
+        </style>
+        <div class="row">
+            <div class="col-lg-2 p-2">
+                <nav id="sidebar" class="border-top border-secondary">
+                    <button type="button"
+                            class="rounded-0 list-group-item list-group-item-action list-group-item-light btn-btn-info"
+                            data-toggle="collapse" data-target="#my_trinfo" href="#my_trinfo">내 거래정보<i
+                            class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <div id="my_trinfo" class="rounded-0 list-group-item content">
+                        <p class="fa fa-chevron-right"><a class="rounded-0 list-group-item-action list-group-item-light"
+                                                          style="margin-left:5px; font-size: 15px" href="/tradeinfo/reglist">등록/입찰내역</a>
+                        </p>
+                        <p class="fa fa-chevron-right"><a class="rounded-0 list-group-item-action list-group-item-light"
+                                                          style="margin-left:5px; font-size: 15px" href="/tradeinfo/selllist">거래진행</a>
+                        </p>
+                    </div>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light btn-btn-info"
+                            data-toggle="collapse" data-target="#my_info" href="#my_info">내 개인정보<i
+                            class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <div id="my_info" class="rounded-0 list-group-item content collapse">
+                        <p class="fa fa-chevron-right"><a class="rounded-0 list-group-item-action list-group-item-light"
+                                                          style="margin-left:5px; font-size: 15px" href="#callcategory">포인트
+                            충전</a></p>
+                    </div>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            data-toggle="collapse" data-target="#del_acc" href="#del_acc">회원탈퇴<i
+                            class="fa fa-chevron-down"
+                            style="float:right;"></i></button>
+                    <div id="del_acc" class="rounded-0 list-group-item content collapse">
+                        <p class="fa fa-chevron-right"><a class="rounded-0 list-group-item-action list-group-item-light"
+                                                          style="margin-left:5px; font-size: 15px" href="#callcategory">회원탈퇴</a>
+                        </p>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="content col-lg-9" style="margin-left:10px">
+                <strong>| 거래진행/완료내역 </strong>
+                <hr>
+
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/tradeinfo/selllist">판매</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tradeinfo/buylist">구매</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tradeinfo/tradesuclist">거래완료</a>
+                    </li>
+                </ul>
+
+                <table class="table table-hover text-center mt-3">
+                    <thead>
+                    <tr style="background: rgba(226, 226, 226, 0.582)">
+                        <th>물품명</th>
+                        <th>낙찰자</th>
+                        <th>낙찰가</th>
+                        <th>거래상태</th>
+                        <th>1:1대화쪽지</th>
+                        <th>거래취소</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="dto: ${tradeDTO}">
+                        <td>[[${dto.pdName}]]</td>
+                        <td>[[${dto.buyer}]]</td>
+                        <td>[[${dto.price}]]</td>
+                        <td>
+                            <span th:if="${dto.state}==1">금액 송금전</span>
+                            <span th:if="${dto.state}==2">물품 인계전</span>
+                            <span th:if="${dto.state}==3">물품 인수확인전</span>
+                            <span th:if="${dto.state}==2" th:data-tradeid="${dto.tradeID}" id="checkinge" class="badge badge-primary">물품인계확인</span>
+                        </td>
+                        <td style="text-align: center;">
+                            <button type="button" th:data-buyer="${dto.buyer}" class="btn btn-outline-secondary btn-sm">보기</button>
+                        </td>
+                        <td style="text-align: center;">
+                            <button type="button" th:data-id="${dto.tradeID}" class="btn btn-outline-secondary btn-sm">취소</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+            </div>
+
+        </div>
+
+        <script th:inline="javascript">
+            $(document).ready(function (e){
+                var msg = [[${msg}]];
+
+                if (msg){
+                    alert(msg);
+                }
+
+                $("#checkinge").on("click",function(){
+                    var tradeID = $(this).data("tradeid");
+                    location.href = "/tradeinfo/checkinge?tradeID=" + tradeID;
+                });
+            });
+        </script>
+    </th:block>
+</th:block>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <div class="container" style="margin-left:10px;">
+      <h4 class="border-bottom pb-2 mb-3" style="margin:10px; margin-bottom:50px;"><i class="fa fa-upload" style="margin:10px"></i>물품 등록</h4>
+      <div class="row justify-content-between mb-3"></div>
+      <!--상품명 입력-->
+      <div class="content" data-role="content" style="margin-left:20px; margin-top:20px; margin-bottom:20px">
+        <div class="row">
+          <form>
+            <select class="form-control" name="large_category" id="category" style="width:180px; margin:5px">
+              <option value="0">카테고리 선택</option>
+              <option value="1">의류</option>
+              <option value="2">뷰티잡화</option>
+              <option value="3">유아용품</option>
+              <option value="4">가구생활</option>
+              <option value="5">취미</option>
+              <option value="6">디지털</option>
+              <option value="7">컴퓨터</option>
+              <option value="8">스포츠</option>
+              <option value="9">자동차</option>
+              <option value="10">도서</option>
+              <option value="11">기타</option>
+            </select>
+          </form>
+          <input type="text" placeholder="상품명을 입력하세요." name="pdName" id="pdName" class="form-control mb-3" style="width:450px; margin:5px">
+        </div>
+      </div>
+      <!--이미지 입력(테이블)-->
+      <div class="container" name="ImageSelect" style="margin-left:20px">
+        <table class="table" style="border-top:1px solid; border-bottom:1px solid; border-color:rgb(192, 192, 192)">
+          <tbody>
+          <th style="float:right;">대표 이미지   <br style="float:right">000*000</br></th>
+          <td>
+            <div class="row">
+              <div class="custom-file mb-1">
+                <input type="file" class="custom-file-input files" id="fileInput1">
+                <label class="custom-file-label" data-browse="찾아보기"></label>
+              </div>
+            </div>
+          </td>
+          </tbody>
+          <tbody>
+          <th style="float:right">상품 보조 이미지   <br>000*000</br></th>
+          <td>
+            <div class="row">
+              <div class="custom-file mb-1">
+                <input type="file" class="custom-file-input files" id="fileInput2">
+                <label class="custom-file-label" data-browse="찾아보기"></label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="custom-file mb-1">
+                <input type="file" class="custom-file-input files" id="fileInput3">
+                <label class="custom-file-label" data-browse="찾아보기"></label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="custom-file mb-1">
+                <input type="file" class="custom-file-input files" id="fileInput4">
+                <label class="custom-file-label" data-browse="찾아보기"></label>
+              </div>
+            </div>
+          </td>
+          </tbody>
+        </table>
+      </div>
+
+      <!--상세정보 입력-->
+      <div class="container" name="more" style="margin-top:20px; margin-left:20px">
+        <textarea name="pdContent" class="form-control" id="pdContent" rows="10" placeholder="물품 상세 내용을 작성해주세요!"></textarea>
+      </div>
+
+      <!--기타 옵션 설정-->
+      <div class="container" style="margin-left:20px; margin-top:30px">
+        <h4 class="border-bottom pb-2 mb-3" style="margin:10px; margin-bottom:70px;">기타 옵션 설정</h4>
+        <div class="row justify-content-between mb-3">
+          <div class="container" style="margin-top:10px; margin-left:20px">
+            <div class="row">
+              <h4><i class="fa fa-clock" style="margin:10px"></i>입찰기간:</h4>
+              <div class="row content" style="margin:10px; ">
+                <input type="radio" name="bidPlus" class="bidPlus" value="3" style="margin-left:10px; margin-right:5px;"><h5>3일</h5>
+                <input type="radio" name="bidPlus" class="bidPlus" value="7" style="margin-left:10px; margin-right:5px; "><h5>7일</h5>
+                <input type="radio" name="bidPlus" class="bidPlus" value="14" style="margin-left:10px; margin-right:5px; "><h5>14일</h5>
+              </div>
+            </div>
+          </div>
+          <div class="container" style="margin-top:10px; margin-left:20px">
+            <div class="row">
+              <h4><i class="fa fa-database" style="margin:10px;"></i>최소입찰가 설정:</h4>
+              <input type="text" name="minBidPrice" id="minBidPrice" class="form-control mb-3" style="width:250px; margin:5px; margin-left:20px">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--하단 버튼-->
+      <div class="container" style="margin-top:10px">
+        <div class="d-flex flex-row-reverse">
+          <button id="listBtn" class="btn btn-sm btn-primary" style="border-radius:7px; background:gray; border: 2px solid rgb(99, 99, 99); width:130px; height:50px; margin:10px">목록보기</button>
+          <button id="submitBtn" class="btn btn-sm btn-primary" style="border-radius:7px; background:gray; border: 2px solid rgb(99, 99, 99); width:130px; height:50px; margin:10px">물품 등록</button>
+        </div>
+      </div>
+
+      <form id="regSubmit" action="/product/register" method="POST">
+        <input type="hidden" id="bidPlus" name="bidPlus"/>
+      </form>
+    </div>
+
+    <script th:inline="javascript">
+
+      $(document).ready(function (e){
+        $("#listBtn").on("click",function (){
+          var page = [[${requestDTO.page}]];
+          location.href = "/product/list?page=" + page;
+        });
+
+        $(".bidPlus").on("change",function (){
+          var target = $(this).val();
+          $("#bidPlus").val(target);
+        });
+
+        $(".custom-file-input").on("change",function (){ //파일 이름 txt에 표시
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        $("#submitBtn").on("click",function (){
+
+
+          var inputFiles = $(".files");
+          var formData = new FormData();
+          var regForm = $("#regSubmit");
+          var str = "";
+
+          for(var i =0; i<inputFiles.length; i++){
+            //파일 유효성 검사 필요
+            formData.append("uploadFiles",inputFiles[i].files[0]);
+          }
+
+          $.ajax({
+            url: '/uploadAjax',
+            processData: false,
+            contentType: false,
+            data: formData,
+            type: 'POST',
+            dataType: 'json',
+
+            success:function (result){
+              $(result).each(function (i,obj){
+
+                str += "<input type='hidden' name='imageDTOList[" + i + "].imgName' value='" + obj.fileName + "'>";
+                str += "<input type='hidden' name='imageDTOList[" + i + "].path' value='" + obj.folderPath + "'>";
+                str += "<input type='hidden' name='imageDTOList[" + i + "].uuid' value='" + obj.uuid + "'>";
+              });
+              regForm.append(str);
+              regForm.append($("#pdName").clone().attr("type","hidden"));
+              regForm.append($("#pdContent").clone().css("display","none"));
+              regForm.append($("#minBidPrice").clone().attr("type","hidden"));
+              regForm.append("<input type='hidden' name='category' value='" + $("#category").val() +"' />");
+              regForm.submit();
+            },
+
+            error: function (jqXHR, textStatus, errorThrown){
+              console.log("파일 업로드 에러");
+            }
+          }); //파일 업로드 호출
+
+        });
+
+
+      });
+    </script>
+  </th:block>
+</th:block>
+</html>

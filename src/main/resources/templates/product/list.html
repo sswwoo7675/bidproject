@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <style>
+            #content {
+                display: inline-block;
+                margin: 10px 100px;
+            }
+
+            #nav {
+                width: 200px;
+                float: left;
+            }
+
+            #section {
+                width: 950px;
+                text-align: left;
+                float: left;
+                padding: 10px;
+            }
+
+            #button {
+                float: right;
+
+            }
+
+            .thumbnail {
+                float: left;
+            }
+
+            .description {
+                height: 100px;
+                float: left;
+                margin-left: 10px;
+            }
+
+            #pagination {
+                margin: 0 auto;
+            }
+        </style>
+        <div class="row">
+            <div id="nav" class="col-sm-12 col-md-3 col-lg-2 p-2">
+                <!-- 사이드바 -->
+                <nav id="sidebar" class="border-top border-secondary">
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#all">전체<i class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#cloth">의류<i class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#beauty">뷰티잡화<i class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#kids">유아용품<i class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#furniture">가구생활<i class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#hobby">취미<i class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#digiter">디지털<i class="fa fa-chevron-down" style="float:right;"></i></button>
+
+                    <button type="button"
+                            class="rounded-0 list-group-item list-group-item-action list-group-item-light btn-btn-info"
+                            data-toggle="collapse" data-target="#computerdemo" href="#computer">컴퓨터<i class="fa fa-chevron-down"
+                                                                                                      style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light"
+                            href="#sports">스포츠<i class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#car">자동차<i
+                            class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#book">도서<i
+                            class="fa fa-chevron-down" style="float:right;"></i></button>
+                    <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#etc">기타<i
+                            class="fa fa-chevron-down" style="float:right;"></i></button>
+                </nav>
+            </div>
+            <div id="section" class="container mt-1">
+                <h6> 전체 </h6>
+                <hr>
+                <div id="button">
+                    <button type="button" class="btn btn-outline-secondary btn-sm">최근순</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm">인기순</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm">마감시간순</button>
+                </div>
+                <br />
+                <!--상품리스트-->
+                <div class="list-group list-group-flush">
+                    <a th:each="dto: ${result.dtoList}" th:href="@{/product/read(pdNum=${dto.pdNum}, page=${result.page})}" class="list-group-item list-group-item-action">
+                        <div class="thumbnail">
+                            <img th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnail150URL()}|" class="rounded float-left" alt="상품이미지" style="width: 150px; height: 150px">
+                        </div>
+                        <div class="description">
+                            <strong style="font-size: 20px;">[[${dto.pdName}]]</strong>
+                            <p style="font-size: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path
+                                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                            </svg>[[${dto.email}]]</p><br>
+                            <p style="font-size: 13px;"><i class="fa fa-users"></i> 현재 입찰인원: [[${dto.bidCount}]]명</p>
+                            <p style="font-size: 13px;"><i class="fa fa-clock"></i> [[${#temporals.format(dto.endDate, 'yyyy/MM/dd HH')}]]시 입찰마감</p>
+                        </div>
+                    </a>
+                </div>
+                <hr>
+                <!--페이지번호-->
+                <div id="pagination" class="pagination">
+                    <nav id="pagination" aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" th:if="${result.prev}">
+                                <a class="page-link" th:href="@{/product/list(page= ${result.start -1})}">Previous</a>
+                            </li>
+                            <li th:class=" 'page-item ' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">
+                                <a class="page-link" th:href="@{/product/list(page = ${page})}">
+                                    [[${page}]]
+                                </a>
+                            </li>
+                            <li class="page-item" th:if="${result.next}">
+                                <a class="page-link" th:href="@{/product/list(page=${result.end + 1})}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <button type="button" id="regbtn" class="btn btn-outline-secondary" style="height:40px">물품등록하기</button>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            $(document).ready(function (e) {
+               var page = [[${result.page}]];
+
+                $("#regbtn").on("click",function (){
+                   location.href = "/product/register?page=" + page;
+               })
+            });
+        </script>
+    </th:block>
+</th:block>
+</html>

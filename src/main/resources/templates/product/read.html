@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <div class="row">
+      <!-- 사이드바 -->
+      <div class="col-sm-12 col-md-3 col-lg-2 p-2">
+        <nav id="sidebar" class="border-top border-secondary">
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#all">전체<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#cloth">의류<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#beauty">뷰티잡화<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#kids">유아용품<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#furniture">가구생활<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#hobby">취미<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#digiter">디지털<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button type="button" class="rounded-0 list-group-item list-group-item-action list-group-item-light btn-btn-info" data-toggle="collapse" data-target="#computerdemo" href="#computer">컴퓨터<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#sports">스포츠<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#car">자동차<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#book">도서<i class="fa fa-chevron-down" style="float:right;"></i></button>
+          <button class="rounded-0 list-group-item list-group-item-action list-group-item-light" href="#etc">기타<i class="fa fa-chevron-down" style="float:right;"></i></button>
+        </nav>
+      </div>
+
+      <!--물품 상세보기 main-->
+      <div class="content col-md-9" data-role="content" style="margin-left:10px">
+        <!--물품 상세보기 main 상단-->
+        <h4 class="border-bottom pb-2 mb-3" style="margin:10px; margin-bottom:50px;"><i class="fa fa-shopping-bag" style="margin:10px"></i>물품 상세 보기</h4>
+        <div class="row justify-content-between mb-3">
+          <div class="row">
+            <!--이미지 부분-->
+            <div class="content" style="margin-left:70px">
+              <div>
+                <img th:src="|/display?fileName=${productDTO.imageDTOList[0].getThumbnail330URL()}|" style="width:330px; height: 330px">
+              </div>
+              <div class="row">
+                <img th:src="|/display?fileName=${productDTO.imageDTOList[1].getThumbnail110URL()}|" style="width:110px; height: 110px; margin:5px">
+                <img th:src="|/display?fileName=${productDTO.imageDTOList[2].getThumbnail110URL()}|" style="width:110px; height: 110px; margin:5px">
+                <img th:src="|/display?fileName=${productDTO.imageDTOList[3].getThumbnail110URL()}|" style="width:110px; height: 110px; margin:5px">
+              </div>
+            </div>
+            <!--상품명 및 경매현황-->
+            <div class="content" style="margin-left:50px">
+              <h3 class="border-bottom pb-2 mb-3" style="margin-bottom:60px; margin-top:60px;">[[${productDTO.pdName}]]</h3>
+              <p href="" style="margin-bottom:20px; margin-top:30px"><i class="fa fa-user" style="margin:5px"></i>[[${productDTO.email}]] ([[${productDTO.name}]])</p>
+              <p href="" style="margin-bottom:30px; margin-top:30px"><i class="fa fa-database" style="margin:5px"></i>최소입찰가: [[${productDTO.minBidPrice}]]원</p>
+              <p href="" style="margin-bottom:30px; margin-top:30px"><i class="fa fa-users" style="margin:5px"></i>[[${productDTO.bidCount}]]명 입찰 참여중</p>
+              <p href="" style="margin-bottom:30px; margin-top:30px"><i class="fa fa-clock" style="margin:5px"></i>입찰종료: [[${#temporals.format(productDTO.endDate, 'yyyy/MM/dd HH')}]]시</p>
+              <div class="row" style="margin-top:20px">
+                <button href="" class="btn btn-sm btn-primary" id="listBidBtn" style="border-radius:7px; background:gray; border: 2px solid rgb(99, 99, 99); width:130px; height:50px; margin:5px">입찰현황조회</button>
+                <button href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#bidModal" style="border-radius:7px; background:gray; border: 2px solid rgb(99, 99, 99); width:100px; height:50px; margin:5px">입찰하기</button>
+                <button href="" class="btn btn-sm btn-primary" style="border-radius:7px; background:gray; border: 2px solid rgb(99, 99, 99); width:150px; height:50px; margin:5px">판매자와 1:1 대화</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--물품 상세보기 main 하단-->
+        <div class="content" data-role="content" style="margin-left:10px; margin-top:100px">
+          <h4 class="border-bottom pb-2 mb-3" style="margin:10px; margin-bottom:50px;"><i class="fa fa-info" style="margin:5px; margin-right:10px"></i>상품 상세 설명</h4>
+          <textarea name="pdContent" class="form-control" id="pdContent" rows="10" readonly style="margin-left:10px">[[${productDTO.pdContent}]]</textarea>
+        </div>
+
+        <!--하단 버튼-->
+        <div class="row" style="margin-top:50px; float:right">
+          <button id="listBtn" class="btn btn-sm btn-primary" style="border-radius:7px; background:gray; border: 2px solid rgb(99, 99, 99); width:130px; height:50px; margin:10px;">목록보기</button>
+          <button class="btn btn-sm btn-primary" style="border-radius:7px; background:gray; border: 2px solid rgb(99, 99, 99); width:130px; height:50px; margin:10px">물품 삭제</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="bidListModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bidListModalLabel">입찰현황조회</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover text-center" id="listTable">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">입찰자 ID</th>
+                  <th scope="col">입찰일자</th>
+                  <th scope="col">입찰신청가</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">창 닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="bidModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bidModalLabel">입찰하기</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="padding-right: 10px">
+            <p>
+              <i class="fas fa-angle-right"></i> <b>상품명</b> [[${productDTO.pdName}]]
+            </p>
+            <div>
+              <i class="fas fa-angle-right"></i> <b>입찰가 설정</b> <input type="text" class="form-control" id="bidPrice" placeholder="금액을 입력하세요" style="width:250px; margin-top:10px">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">창 닫기</button>
+            <button id="regBidBtn" type="button" class="btn btn-primary">입찰하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      $(document).ready(function (e) {
+        $("#listBtn").on("click",function (){  //목록보기 버튼 클릭
+          var page = [[${requestDTO.page}]];
+          location.href = "/product/list?page=" + page;
+        });
+
+        $("#regBidBtn").on("click",function (){ //입찰하기 버튼 클릭
+          var pdNum = [[${productDTO.pdNum}]];
+          var bidPrice = $("#bidPrice").val();
+          var biddata = {pdNum: pdNum, bidPrice: bidPrice};
+
+          $.ajax({
+            url: '/bidding/' + pdNum,
+            type: "POST",
+            data: JSON.stringify(biddata),
+            contentType: "application/json; charset=utf-8",
+            dataType: "Text",
+
+            success:function (result){
+              if(result == "alredyBidding"){
+                alert("이미 해당 상품에 대한 입찰기록이 있어 입찰이 불가능합니다.");
+                $("#bidModal").modal("hide");
+              } else if(result == "minBidPriceError"){
+                alert("입찰금액이 최소입찰가보다 작습니다 다시 설정해 주세요.");
+                $("#bidModal").modal("hide");
+              } else if(result == "lackPoint") {
+                alert("포인트가 부족합니다. 포인트를 충전하세요");
+                $("#bidModal").modal("hide");
+              } else if(result == "success"){
+                alert("성공적으로 입찰하였습니다.");
+                self.location.reload();
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown){
+              console.log("통신에러");
+            }
+          })
+        });
+
+        $("#listBidBtn").on("click",function (){
+          var pdNum = [[${productDTO.pdNum}]];
+          var str = "";
+
+          $.getJSON("/bidding/pdBidList?pdNum=" + pdNum,function (data){
+
+            if(data.length == 0){
+              str = "<tr><th scope='row' colspan='4'>입찰내역이 없습니다</th></tr>"
+            } else {
+              $.each(data,function (idx,bidData){
+                var date = new Date(bidData.bidDate);
+                var index = Number(idx) + 1;
+
+                str += "<tr>";
+                str += "<td>" + index + "</td>"
+                str += "<td>" + bidData.bidMember + "</td>"
+                str += "<td>" + date.toLocaleString() + "</td>"
+                /*str += "<td>" + bidData.bidPrice + "원</td>"*/
+                str += "<td>-</td>"
+                str += "</tr>"
+              });
+            }
+
+            $("#listTable > tbody").html(str);
+            $("#bidListModal").modal('show');
+          });
+        });
+      });
+    </script>
+  </th:block>
+</th:block>
+</html>

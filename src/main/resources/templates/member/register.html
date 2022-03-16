@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <fieldset>
+      <legend> 회원가입 </legend>
+      <form action="" name="myform" method="get" id="myform" class="" onsubmit="return check()">
+        <hr>
+        <!-- 이름 -->
+        <div class="form-group">
+          <label for="name" style="display:block"> 이름 </label>
+          <input type="text" id="name" class="form-control" style="width: 200px; display: inline-block">
+          &nbsp;한글로 5글자 이내로 입력해주세요.
+        </div>
+        <!-- 아이디 -->
+        <div class="form-group">
+          <label for="mail" style="display:block"> 이메일 </label>
+          <input type="email" id="mail" class="form-control" style="width: 200px; display: inline-block"> @
+          <input type="email" id="mail" class="form-control" style="width: 200px; display: inline-block">
+          <select class="custom-select" style="height: 35px; width:150px">
+            <option value="">직접입력</option>
+            <option value="gmail.com">gmail.com</option>
+            <option value="naver.com">naver.com</option>
+            <option value="daum.net">daum.net</option>
+            <option value="nate.com">nate.com</option>
+          </select>
+          <input type="button" class="btn btn-warning" value="중복확인" onClick="idcheck()">
+        </div>
+        <!-- 비밀번호 -->
+        <div class="form-group">
+          <label for="pwd" style="display:block"> 비밀번호 </label>
+          <input type="password" id="pwd" class="form-control" placeholder="비밀번호 입력"
+                 style="width: 400px; display: inline-block">
+          영문, 숫자, 특수문자를 조합하여 8~20자 이내로 입력
+        </div>
+        <!-- 비밀번호 확인 -->
+        <div class="form-group">
+          <label for="pwdCheck"> 비밀번호 확인 </label>
+          <input type="password" id="pwdCheck" class="form-control" placeholder="비밀번호 확인" style="width: 400px;">
+        </div>
+        <!-- 닉네임 -->
+        <div class="form-group">
+          <label for="nikname" style="display:block"> 닉네임 </label>
+          <input type="text" id="nikname" class="form-control" style="width: 200px; display: inline-block">
+          &nbsp;한글로 5글자 이내로 입력해주세요.
+        </div>
+        <!-- 휴대폰 -->
+        <div class="form-group">
+          <label for="pnum" style="display:block">휴대폰</label>
+          <select class="custom-select" style="height:35px; width:100px; display: inline-block">
+            <option value="010">010</option>
+            <option value="011">011</option>
+            <option value="016">016</option>
+            <option value="017">017</option>
+            <option value="017">019</option>
+          </select>
+          - <input type="tell" id="pnum" class="form-control" style="width: 100px; display: inline-block">
+          - <input type="tell" id="pnum" class="form-control" style="width: 100px; display: inline-block">
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-2">
+            <input type="submit" value="회원가입" class="btn btn-primary btn-block">
+          </div>
+          <div class="col-2">
+            <input type="reset" value="취소" class="btn btn-primary btn-block">
+          </div>
+        </div>
+
+    </fieldset>
+  </th:block>
+</th:block>
+</html>
