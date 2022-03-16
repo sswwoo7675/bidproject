@@ -2,7 +2,7 @@
 
 ## ❓ 개요
 - 자신의 중고물품을 입찰 형식으로 판매할 수 있는 서비스입니다.
-- 소개영상([다운](https://www.icloud.com/iclouddrive/0e6XCa-IvNIu232CbbvMgBlvQ#3._%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C%EC%98%81%EC%83%81(51Byte)))
+- 소개영상
 
 [![소개영상](http://img.youtube.com/vi/sCF386j7EXY/0.jpg)](https://youtu.be/sCF386j7EXY) 
 
